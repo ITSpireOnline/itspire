@@ -37,14 +37,14 @@ export default function FloatingButtons() {
         <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t shadow-lg p-3">
           <div className="flex gap-3">
             <Link
-              href="tel:+91-920-512-8946"
+              href="tel:+91-887-368-1868"
               className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-semibold text-center transition-colors flex items-center justify-center gap-2"
             >
               <Phone className="w-4 h-4" />
               CALL US
             </Link>
             <Link
-              href="https://api.whatsapp.com/send?phone=919958663840&text=Hi%2C%20I%20would%20like%20to%20book%20an%20appointment%2E"
+              href="https://api.whatsapp.com/send?phone=918873681868&text=Hi%2C%20I%20would%20like%20to%20book%20an%20appointment%2E"
               target="_blank"
               className="flex-1 bg-green-500 hover:bg-green-600 text-white py-3 px-4 rounded-lg font-semibold text-center transition-colors flex items-center justify-center gap-2"
             >
