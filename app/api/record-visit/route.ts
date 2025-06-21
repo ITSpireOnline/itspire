@@ -59,10 +59,8 @@ export async function POST(req: NextRequest) {
 
     await runTransaction(db, async (transaction) => {
       
-      const dailyVisitorDocSnap = await transaction.get(dailyVisitorDocRef);
       const visitIdCounterSnap = await transaction.get(visitIdCounterRef); 
 
-      const currentDailyCount = dailyVisitorDocSnap.exists() ? dailyVisitorDocSnap.data().count : 0;
 
       const currentGlobalId = visitIdCounterSnap.exists() ? visitIdCounterSnap.data().currentId : 0;
       const newGlobalId = currentGlobalId + 1;
