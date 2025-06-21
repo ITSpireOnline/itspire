@@ -15,9 +15,9 @@ interface StatItem {
 
 const getTodayDate = () => {
   const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, '0');
-  const day = String(today.getDate()).padStart(2, '0');
+  const year = today.getUTCFullYear(); // Use UTC year
+  const month = String(today.getUTCMonth() + 1).padStart(2, '0'); // Use UTC month
+  const day = String(today.getUTCDate()).padStart(2, '0');     // Use UTC day
   return `${year}-${month}-${day}`;
 };
 
@@ -125,7 +125,7 @@ export default function StatsCounter() {
         // --- 3. Fetch today's visitor count directly from Firestore for DISPLAY ---
         // This reads the count that the API route just incremented.
         const todayDate = getTodayDate();
-        const visitorDocRef = doc(db, "visitors", todayDate);
+        const visitorDocRef = doc(db, "dailyVisitors", todayDate); // <-- Change "visitors" to "dailyVisitors"
         const visitorDocSnap = await getDoc(visitorDocRef);
         let currentVisitorsCount = 0;
         if (visitorDocSnap.exists()) {

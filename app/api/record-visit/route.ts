@@ -5,9 +5,9 @@ import { db } from '@/firebase/firebaseConfig';
 
 const getTodayDate = () => {
   const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, '0');
-  const day = String(today.getDate()).padStart(2, '0');
+  const year = today.getUTCFullYear(); // Use UTC year
+  const month = String(today.getUTCMonth() + 1).padStart(2, '0'); // Use UTC month
+  const day = String(today.getUTCDate()).padStart(2, '0');     // Use UTC day
   return `${year}-${month}-${day}`;
 };
 
@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const todayDate = getTodayDate();
-    const dailyVisitorDocRef = doc(db, "visitors", todayDate);
+    const dailyVisitorDocRef =doc(db, "dailyVisitors", todayDate);
     const visitIdCounterRef = doc(db, "globalCounters", "visitIdCounter");
     const detailedVisitLogsCollectionRef = collection(db, "detailedVisitLogs");
 
