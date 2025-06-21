@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
       const newGlobalId = currentGlobalId + 1;
 
       transaction.set(dailyVisitorDocRef, {
-        count: currentDailyCount + 1,
+        count: increment(1),
         label: "Total Visitors Today",
         suffix: "+",
         lastRecordedIp: ip,
