@@ -13,7 +13,6 @@ export default function HeaderAndPopupWrapper() {
 
   // Function to open the popup
   const handleConsultClick = () => {
-    alert("hii");
     setShowConsultPopup(true);
   };
 
