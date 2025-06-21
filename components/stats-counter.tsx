@@ -2,23 +2,21 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-// Import Firebase Firestore functions
+// Only import Firestore functions needed for *reading* data on the client
 import { db } from "@/firebase/firebaseConfig"
-import { collection, doc, getDoc, getDocs, updateDoc, increment, setDoc } from "firebase/firestore"
+import { collection, doc, getDoc, getDocs } from "firebase/firestore"
 
-// Define the interface for a stat item fetched from Firestore
 interface StatItem {
-  id: string; // The document ID (e.g., "mobileApps", "visitors")
-  value: number; // The numerical value of the stat
+  id: string;
+  value: number;
   label: string;
   suffix: string;
 }
 
-// Helper function to get today's date in YYYY-MM-DD format
 const getTodayDate = () => {
   const today = new Date();
   const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+  const month = String(today.getMonth() + 1).padStart(2, '0');
   const day = String(today.getDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
 };
@@ -42,37 +40,33 @@ function CounterItem({ number, label, suffix }: { number: number; label: string;
       observer.observe(ref.current)
     }
 
-    // Cleanup the observer when the component unmounts
     return () => {
       if (ref.current) {
         observer.unobserve(ref.current)
       }
       observer.disconnect()
     }
-  }, []) // Empty dependency array ensures this effect runs once on mount
+  }, [])
 
   useEffect(() => {
-    let timer: NodeJS.Timeout; // Define timer variable outside if block for proper cleanup
-
+    let timer: NodeJS.Timeout;
     if (isVisible) {
-      setCount(0); // Reset count to re-animate if it becomes visible again
+      setCount(0);
       timer = setInterval(() => {
         setCount((prev) => {
           if (prev < number) {
-            
             const incrementStep = Math.ceil(number / 100);
-            return Math.min(prev + incrementStep, number); 
+            return Math.min(prev + incrementStep, number);
           }
-          return number; 
+          return number;
         });
-      }, 50); 
+      }, 50);
     }
 
-    // Cleanup the interval when visibility changes or component unmounts
     return () => {
       if (timer) clearInterval(timer);
     };
-  }, [isVisible, number]); // Re-run effect when visibility changes or target number changes
+  }, [isVisible, number]);
 
   return (
     <div ref={ref} className="text-center">
@@ -89,46 +83,58 @@ export default function StatsCounter() {
   const [fetchedStats, setFetchedStats] = useState<StatItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const hasIncrementedRef = useRef(false); // To ensure visit count only increments once per page load
 
   useEffect(() => {
-    const fetchStats = async () => {
+    const recordAndFetchStats = async () => {
       try {
+
+        if (!hasIncrementedRef.current) {
+          const recordVisitResponse = await fetch('/api/record-visit', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+
+          });
+
+          if (!recordVisitResponse.ok) {
+            const errorData = await recordVisitResponse.json();
+            console.error("Failed to record visit:", errorData.message);
+          } else {
+            console.log("Visit recorded successfully on server.");
+            hasIncrementedRef.current = true; // Mark as incremented for this session
+          }
+        }
+
+        // --- 2. Fetch all website stats from Firestore ---
         const statsCollectionRef = collection(db, "websiteStats");
-        const snapshot = await getDocs(statsCollectionRef);
+        const websiteStatsSnapshot = await getDocs(statsCollectionRef);
 
         const loadedStats: StatItem[] = [];
-        snapshot.forEach((doc) => {
+        websiteStatsSnapshot.forEach((doc) => {
           const data = doc.data();
           loadedStats.push({
             id: doc.id,
-            value: data.value, // Use 'value' field from DB
+            value: data.value,
             label: data.label,
             suffix: data.suffix,
           });
         });
 
-        // Fetch and increment today's visitor count
+        // --- 3. Fetch today's visitor count directly from Firestore for DISPLAY ---
+        // This reads the count that the API route just incremented.
         const todayDate = getTodayDate();
-        const visitorDocRef = doc(db, "visitors", todayDate); // Document for today's visitors
-
-        // Use a transaction or combined op eration for robustness if needed,
-        // but for a simple increment, updateDoc is often sufficient.
-        await setDoc(visitorDocRef, {
-          count: increment(1),
-          label: "Total Visitors Today", // Store label here for this stat
-          suffix: "+",
-        }, { merge: true }); // Use merge: true to create if not exists, or update if it does.
-
-        // After incrementing, get the *current* count for display
+        const visitorDocRef = doc(db, "visitors", todayDate);
         const visitorDocSnap = await getDoc(visitorDocRef);
         let currentVisitorsCount = 0;
         if (visitorDocSnap.exists()) {
           currentVisitorsCount = visitorDocSnap.data().count;
         }
 
-        // Add today's visitor stat to the list of loaded stats
+        // Add today's visitor stat to the list for display
         loadedStats.push({
-          id: 'totalVisitorsToday', // Consistent ID for mapping
+          id: 'totalVisitorsToday',
           value: currentVisitorsCount,
           label: "Total Visitors Today",
           suffix: "+",
@@ -148,7 +154,7 @@ export default function StatsCounter() {
       }
     };
 
-    fetchStats();
+    recordAndFetchStats();
   }, []); // Empty dependency array ensures this runs once on mount
 
   if (loading) {
@@ -181,8 +187,8 @@ export default function StatsCounter() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {fetchedStats.map((stat) => (
             <CounterItem
-              key={stat.id} // Using stat.id as key for stability
-              number={stat.value} // Use 'value' from fetched data
+              key={stat.id}
+              number={stat.value}
               label={stat.label}
               suffix={stat.suffix}
             />

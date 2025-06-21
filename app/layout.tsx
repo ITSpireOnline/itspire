@@ -27,11 +27,15 @@ export const metadata: Metadata = {
     'tech solutions',
     'IT services',
     'India',
-    'Ghaziabad', // Added based on context
-    'Uttar Pradesh', // Added based on context
+    'Ghaziabad', 
+    'Uttar Pradesh',
+    'Bihar',
+    'Muzaffarpur',
+    'Noida',
+    'Best IT service provider',
   ],
   alternates: {
-    canonical: 'https://www.itspire.online/', // Added trailing slash for consistency
+    canonical: 'https://www.itspire.online/', 
   },
   openGraph: {
     title: 'IT Spire Online - Innovating Digital Experiences',
@@ -40,7 +44,7 @@ export const metadata: Metadata = {
     siteName: 'IT Spire Online',
     images: [
       {
-        url: 'https://www.itspire.online/sachin.png', // Assuming 'sachin.png' is publicly accessible
+        url: 'https://www.itspire.online/itspirelogo.svg', 
         width: 1200,
         height: 630,
         alt: 'IT Spire Online - Digital Solutions',
@@ -53,7 +57,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'IT Spire Online - Innovating Digital Experiences',
     description: 'IT Spire Online specializes in innovative web development, mobile app creation, UI/UX design, and digital marketing solutions to elevate your business online.',
-    images: ['https://www.itspire.online/sachin.png'], // Using the same image for consistency
+    images: ['https://www.itspire.online/itspirelogo.svg'],
   },
   robots: {
     index: true,
@@ -71,19 +75,12 @@ export const metadata: Metadata = {
   publisher: 'IT Spire Online',
 };
 
-// 2. Define your viewport object as a SEPARATE top-level export
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
-  // You can add other viewport-related properties here if needed,
-  // for example: themeColor, colorScheme, userScalable, etc.
-  // themeColor: '#FFFFFF',
-  // colorScheme: 'light',
-  // userScalable: false,
 };
 
-// --- Your RootLayout component ---
 export default function RootLayout({
   children,
 }: Readonly<{

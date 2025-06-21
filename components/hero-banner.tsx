@@ -6,16 +6,14 @@ import Image from "next/image";
 import { db } from "@/firebase/firebaseConfig"; // Adjust path as per your setup
 import { doc, getDoc } from "firebase/firestore";
 
-// 1. Define the TypeScript interface for a single banner slide
 interface BannerSlide {
   title: string;
   highlight: string;
   description: string;
-  image: string; // Path to the image
+  image: string; 
 }
 
 export default function HeroBanner() {
-  // 2. Type the bannerSlides state as an array of BannerSlide
   const [bannerSlides, setBannerSlides] = useState<BannerSlide[]>([]);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -25,12 +23,11 @@ export default function HeroBanner() {
     // Function to fetch data from Firestore
     const fetchBannerSlides = async () => {
       try {
-        const docRef = doc(db, "bannerSlides", "uRwpf1Ijp66cklStNrOU"); // 'bannerSlides' is collection, 'data' is document ID
+        const docRef = doc(db, "bannerSlides", "uRwpf1Ijp66cklStNrOU"); 
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
           const fetchedData = docSnap.data();
-          // 3. Type assertion for fetchedData.slides to BannerSlide[]
           if (fetchedData && Array.isArray(fetchedData.slides)) {
             setBannerSlides(fetchedData.slides as BannerSlide[]);
           } else {
@@ -39,7 +36,7 @@ export default function HeroBanner() {
         } else {
           setError("No such document found in Firestore: 'bannerSlides/data'.");
         }
-      } catch (err: any) { // Type the error caught in catch block
+      } catch (err: any) { 
         console.error("Error fetching banner slides:", err);
         setError(`Failed to fetch banner data: ${err.message || "Unknown error"}.`);
       } finally {
@@ -49,8 +46,6 @@ export default function HeroBanner() {
 
     fetchBannerSlides();
 
-    // Auto-advance logic for the carousel
-    // Only set up interval if there are slides, to prevent division by zero
     let interval: NodeJS.Timeout;
     if (bannerSlides.length > 0) {
       interval = setInterval(() => {
@@ -59,13 +54,11 @@ export default function HeroBanner() {
     }
 
 
-    // Cleanup interval on component unmount or if bannerSlides change
     return () => {
         if (interval) clearInterval(interval);
     };
-  }, [bannerSlides.length]); // Re-run effect if number of slides changes (e.g., after fetching)
+  }, [bannerSlides.length]); 
 
-  // Handle loading and error states
   if (loading) {
     return (
       <section className="relative w-full h-[calc(100vh-64px)] lg:h-[calc(100vh-80px)] flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
