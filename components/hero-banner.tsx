@@ -1,106 +1,139 @@
-"use client"
+// components/HeroBanner.tsx
+"use client"; // This component uses useState and useEffect, so it must be a client component
 
-import { useState, useEffect } from "react"
-import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import { db } from "@/firebase/firebaseConfig"; // Adjust path as per your setup
+import { doc, getDoc } from "firebase/firestore";
 
-const bannerSlides = [
-  {
-    title: "Redefining",
-    highlight: "User Experience",
-    description:
-      "We turn your vision into a tangible solution with our cutting-edge technology and creative expertise.",
-    image: "/homepagebanner1.png?height=600&width=1200",
-  },
-  {
-    title: "Transforming",
-    highlight: "Customer Engagement",
-    description:
-      "Our innovative technology and creative expertise empower us to transform your vision into a tangible solution.",
-    image: "/homepagebanner2.png?height=600&width=1200",
-  },
-  {
-    title: "Empowering",
-    highlight: "User Satisfaction",
-    description:
-      "By combining advanced technology and our creative skills, we can turn your vision into a concrete solution.",
-    image: "/homepagebanner3.png?height=600&width=1200",
-  },
-]
+// 1. Define the TypeScript interface for a single banner slide
+interface BannerSlide {
+  title: string;
+  highlight: string;
+  description: string;
+  image: string; // Path to the image
+}
 
 export default function HeroBanner() {
-  const [currentSlide, setCurrentSlide] = useState(0)
+  // 2. Type the bannerSlides state as an array of BannerSlide
+  const [bannerSlides, setBannerSlides] = useState<BannerSlide[]>([]);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null); // Type for error state
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % bannerSlides.length)
-    }, 5000)
-    return () => clearInterval(timer)
-  }, [])
+    // Function to fetch data from Firestore
+    const fetchBannerSlides = async () => {
+      try {
+        const docRef = doc(db, "bannerSlides", "uRwpf1Ijp66cklStNrOU"); // 'bannerSlides' is collection, 'data' is document ID
+        const docSnap = await getDoc(docRef);
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % bannerSlides.length)
+        if (docSnap.exists()) {
+          const fetchedData = docSnap.data();
+          // 3. Type assertion for fetchedData.slides to BannerSlide[]
+          if (fetchedData && Array.isArray(fetchedData.slides)) {
+            setBannerSlides(fetchedData.slides as BannerSlide[]);
+          } else {
+            setError("Data format invalid: 'slides' array not found or incorrect.");
+          }
+        } else {
+          setError("No such document found in Firestore: 'bannerSlides/data'.");
+        }
+      } catch (err: any) { // Type the error caught in catch block
+        console.error("Error fetching banner slides:", err);
+        setError(`Failed to fetch banner data: ${err.message || "Unknown error"}.`);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBannerSlides();
+
+    // Auto-advance logic for the carousel
+    // Only set up interval if there are slides, to prevent division by zero
+    let interval: NodeJS.Timeout;
+    if (bannerSlides.length > 0) {
+      interval = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % bannerSlides.length);
+      }, 4000); 
+    }
+
+
+    // Cleanup interval on component unmount or if bannerSlides change
+    return () => {
+        if (interval) clearInterval(interval);
+    };
+  }, [bannerSlides.length]); // Re-run effect if number of slides changes (e.g., after fetching)
+
+  // Handle loading and error states
+  if (loading) {
+    return (
+      <section className="relative w-full h-[calc(100vh-64px)] lg:h-[calc(100vh-80px)] flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+        <p className="text-xl text-gray-600 animate-pulse">Loading amazing digital experiences...</p>
+      </section>
+    );
   }
 
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + bannerSlides.length) % bannerSlides.length)
+  if (error) {
+    return (
+      <section className="relative w-full h-[calc(100vh-64px)] lg:h-[calc(100vh-80px)] flex items-center justify-center bg-red-100">
+        <p className="text-xl text-red-700">Error: {error}</p>
+      </section>
+    );
   }
+
+  if (bannerSlides.length === 0) {
+    return (
+      <section className="relative w-full h-[calc(100vh-64px)] lg:h-[calc(100vh-80px)] flex items-center justify-center bg-gray-100">
+        <p className="text-xl text-gray-600">No banner slides available. Please add data to Firestore.</p>
+      </section>
+    );
+  }
+
+  // 4. current is implicitly typed as BannerSlide due to indexing bannerSlides array
+  const current = bannerSlides[currentSlide];
 
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image */}
+    <section className="relative w-full h-[calc(100vh-64px)] lg:h-[calc(100vh-80px)] flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <Image
-          src={bannerSlides[currentSlide].image || "/placeholder.svg"}
-          alt="Banner Background"
-          fill
-          className="object-cover"
-          priority
+          src={current.image}
+          alt={current.title}
+          layout="fill"
+          objectFit="cover"
+          priority // Prioritize loading for the main banner image
         />
-        <div className="absolute inset-0 bg-black/50" />
+        <div className="absolute inset-0 bg-black/50" /> {/* Dark overlay */}
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 text-center text-white">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-fade-in">
-            {bannerSlides[currentSlide].title}{" "}
-            <span className="text-blue-400">{bannerSlides[currentSlide].highlight}</span>
-          </h1>
-          <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto opacity-90">
-            {bannerSlides[currentSlide].description}
-          </p>
-          <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3">
-            Consult Our Team
-          </Button>
+      <div className="relative z-10 text-center text-white p-4 max-w-4xl mx-auto">
+        <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold leading-tight drop-shadow-lg">
+          {current.title}{" "}
+          <span className="text-blue-400">{current.highlight}</span>
+        </h1>
+        <p className="mt-4 text-lg sm:text-xl lg:text-2xl font-light max-w-2xl mx-auto drop-shadow">
+          {current.description}
+        </p>
+        <div className="mt-8 space-x-4">
+          {/* Add buttons or calls to action here, e.g. */}
+          {/* <Button variant="primary">Learn More</Button>
+          <Button variant="outline">Contact Us</Button> */}
         </div>
       </div>
 
-      {/* Navigation Arrows */}
-      <button
-        onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors"
-      >
-        <ChevronLeft className="w-6 h-6 text-white" />
-      </button>
-      <button
-        onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors"
-      >
-        <ChevronRight className="w-6 h-6 text-white" />
-      </button>
-
-      {/* Slide Indicators */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex space-x-2">
-        {bannerSlides.map((_, index) => (
+      {/* Navigation dots */}
+      <div className="absolute bottom-8 z-20 flex space-x-2">
+        {bannerSlides.map((_slide, index) => ( // _slide to indicate parameter is unused
           <button
             key={index}
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+              index === currentSlide ? "bg-white" : "bg-gray-400 hover:bg-gray-200"
+            }`}
             onClick={() => setCurrentSlide(index)}
-            className={`w-3 h-3 rounded-full transition-colors ${index === currentSlide ? "bg-white" : "bg-white/50"}`}
+            aria-label={`Go to slide ${index + 1}`}
           />
         ))}
       </div>
     </section>
-  )
+  );
 }

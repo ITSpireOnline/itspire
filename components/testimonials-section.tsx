@@ -1,4 +1,5 @@
-"use client"
+// components/testimonials-section.tsx
+"use client" // This component uses useState and useEffect, so "use client" is necessary
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
@@ -12,8 +13,8 @@ const testimonials = [
       "When I decided to start my business, I had no idea where to begin. The Web developed by ITSpire groomed my business. Very professional and creative.",
     name: "Dharmendra Kumar",
     position: "Client of Company",
-    image: "/dharm.jpg",
-    videoUrl: "/video1.mp4",
+    image: "/dharm.jpg", // Make sure this path is correct and accessible in `public`
+    videoUrl: "/video1.mp4", // Make sure this path is correct and accessible in `public`
   },
   {
     id: 2,
@@ -21,8 +22,8 @@ const testimonials = [
       "I am really impressed with their work. Looking for a long professional relationship.",
     name: "Sachin Kumar",
     position: "Client of Company",
-    image: "/sachin.png",
-    videoUrl: "/video1.mp4",
+    image: "/sachin.png", // Make sure this path is correct and accessible in `public`
+    videoUrl: "/video1.mp4", // Using the same video for all for now, consider unique videos
   },
   {
     id: 3,
@@ -30,37 +31,43 @@ const testimonials = [
       "IT Support that I always recommend. From App to Website and Maintenance to Digital Marketing - everything handled smoothly.",
     name: "Kumar Gaurav",
     position: "Client of Company",
-    image: "/gaurav.png",
-    videoUrl: "/video1.mp4",
+    image: "/gaurav.png", // Make sure this path is correct and accessible in `public`
+    videoUrl: "/video1.mp4", // Using the same video for all for now
   },
 ]
 
 export default function TestimonialsSection() {
   const [current, setCurrent] = useState(0)
+  // State to control client-side rendering of the video
+  const [hasMounted, setHasMounted] = useState(false); // <--- NEW STATE
+
   const testimonial = testimonials[current]
 
   const next = () => setCurrent((prev) => (prev + 1) % testimonials.length)
   const prev = () => setCurrent((prev) => (prev - 1 + testimonials.length) % testimonials.length)
 
   useEffect(() => {
+    // Set hasMounted to true after the component mounts on the client side
+    setHasMounted(true); // <--- SET TO TRUE ON MOUNT
+
+    // Auto-advance interval
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % testimonials.length)
     }, 7000)
     return () => clearInterval(interval)
-  }, [])
+  }, []) // Empty dependency array means this runs once on mount
 
   return (
     <section className="py-24 bg-gradient-to-br from-sky-50 via-white to-indigo-100 relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
-         <h4 className="text-indigo-600 font-semibold text-xl md:text-2xl tracking-widest uppercase">
-  Testimonials
-</h4>
-<h2 className="text-5xl md:text-6xl font-bold text-gray-800 mt-4">
-  What Our Clients Say
-</h2>
-
+           <h4 className="text-indigo-600 font-semibold text-xl md:text-2xl tracking-widest uppercase">
+              Testimonials
+          </h4>
+          <h2 className="text-5xl md:text-6xl font-bold text-gray-800 mt-4">
+              What Our Clients Say
+          </h2>
         </div>
 
         {/* Grid Content */}
@@ -79,7 +86,7 @@ export default function TestimonialsSection() {
                 width={60}
                 height={60}
                 className="rounded-full object-cover border-2 border-indigo-500 w-[60px] h-[60px]"
-                unoptimized
+                unoptimized // Use unoptimized if these are small profile pics and you don't want Next.js processing
               />
               <div>
                 <p className="text-base font-bold text-gray-800">{testimonial.name}</p>
@@ -117,15 +124,26 @@ export default function TestimonialsSection() {
 
           {/* Right - Video (Preserve size & ratio) */}
           <div className="bg-white rounded-3xl p-3 shadow-2xl w-full flex justify-center items-center">
-            <video
-              src={testimonial.videoUrl}
-              controls
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="rounded-2xl max-h-[500px] w-auto object-contain border border-gray-200"
-            />
+            {/* Conditionally render the video only if hasMounted is true */}
+            {hasMounted ? ( // <--- CONDITIONAL RENDERING
+              <video
+                key={testimonial.id} // Important for React to re-render video on testimonial change
+                src={testimonial.videoUrl}
+                controls
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="rounded-2xl max-h-[500px] w-auto object-contain border border-gray-200"
+              />
+            ) : (
+              // Placeholder for server rendering and initial client load
+              <div className="w-full h-[300px] md:h-[500px] bg-gray-200 rounded-2xl flex items-center justify-center text-gray-500">
+                <span className="text-lg">Loading video...</span>
+                {/* You could add an image thumbnail here if available */}
+                {/* <Image src={testimonial.thumbnailUrl} alt="Video thumbnail" width={500} height={300} /> */}
+              </div>
+            )}
           </div>
         </div>
       </div>

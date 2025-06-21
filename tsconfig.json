@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "components/floating-buttons.tsx", "components/clients-section.tsx", "components/contact-section.jsx", "components/header.tsx"],
   "exclude": ["node_modules"]
 }
