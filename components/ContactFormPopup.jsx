@@ -5,9 +5,9 @@ import { useState } from "react";
 // Import Firestore functions: collection, addDoc, serverTimestamp
 import { db } from "@/firebase/firebaseConfig"; // Your Firestore instance
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { X, Loader2 } from "lucide-react";
 
 export default function ContactFormPopup({ isOpen, onClose }) {
