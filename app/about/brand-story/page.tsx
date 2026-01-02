@@ -1,97 +1,118 @@
-// app/about/brand-story/page.tsx
-"use client"; // If you plan any client-side interactivity, otherwise remove this.
+"use client";
 
-import Link from 'next/link';
-
-// Metadata for Server Components. If this file remains a Client Component,
-// consider moving metadata to a parent layout (e.g., app/about/layout.tsx).
-
-// export const metadata = {
-//   title: 'Brand Story - IT Spire',
-//   description: 'Discover the founding principles, values, and milestones that shaped IT Spire.',
-// };
-
+import Link from "next/link";
+import Image from "next/image";
 
 export default function BrandStoryPage() {
   return (
-    <div className="min-h-screen bg-gray-50 py-16 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-8 md:p-10">
-        <h1 className="text-4xl font-extrabold text-gray-900 text-center mb-6">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-16 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto bg-white shadow-2xl rounded-3xl p-8 md:p-16">
+
+        {/* Header */}
+        <h1 className="text-5xl font-extrabold text-gray-900 text-center mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 animate-fadeIn">
           The IT Spire Brand Story
         </h1>
-        <p className="text-lg text-gray-700 text-center mb-10 leading-relaxed">
-          Every great company has a story, and IT Spire is no exception. Our brand is built on core principles of innovation, integrity, and a relentless pursuit of excellence. This is the narrative of how we came to be and what continues to inspire us.
+        <p className="text-lg text-gray-700 text-center mb-16 leading-relaxed animate-fadeIn delay-200">
+          IT Spire was created with friendship, trust, and a shared vision. What started as an idea between three friends has grown into a technology brand focused on innovation, quality, and meaningful digital impact.
         </p>
 
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold text-blue-700 mb-6 border-b-2 border-blue-200 pb-2">
-            The Genesis
+        {/* Genesis */}
+        <section className="mb-20 animate-fadeIn delay-400">
+          <h2 className="text-3xl font-bold text-blue-700 mb-6 border-b-4 border-blue-200 pb-2">
+            How It All Started
           </h2>
           <p className="text-lg text-gray-800 leading-relaxed mb-4">
-            IT Spire was born out of a simple yet profound realization: businesses, regardless of their size, needed reliable, creative, and forward-thinking digital partners. Our founder, **[Founder's Name/Brief Origin Story]**, envisioned a company that wouldn't just build software, but would build solutions that genuinely transform operations and accelerate growth. The initial spark came from identifying a gap in the market for quality, customer-centric digital services that combined technical prowess with strategic business understanding.
+            IT Spire was founded by <strong>three friends</strong> who shared a passion for technology, design, and problem-solving. While working on different projects and learning from real-world challenges, they realized that many businesses struggled to find reliable and creative digital partners.
           </p>
           <p className="text-lg text-gray-800 leading-relaxed">
-            The early days were about laying the foundation – building a team of passionate individuals who shared the vision, and establishing a culture of curiosity and continuous improvement. We focused on small projects, meticulously delivering value and building trust, one client at a time.
+            Combining their individual strengths—development, design, and strategy—they decided to collaborate and build something meaningful. Their goal was simple: create digital solutions that are powerful, user-friendly, and designed for long-term success.
           </p>
         </section>
 
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold text-blue-700 mb-6 border-b-2 border-blue-200 pb-2">
-            Milestones & Growth
+        {/* Milestones */}
+        <section className="mb-20 animate-fadeIn delay-600">
+          <h2 className="text-3xl font-bold text-blue-700 mb-6 border-b-4 border-blue-200 pb-2">
+            Growth & Milestones
           </h2>
-          <ul className="list-disc list-inside text-gray-800 text-lg space-y-4 leading-relaxed">
-            <li>**[2025]**: Launched our first major [type of project, e.g., e-commerce platform].</li>
-            <li>**[2025]**: Expanded our team to include [number] specialized [roles, e.g., UI/UX designers].</li>
-            <li>**[2025]**: Opened our new office in Ghaziabad, enhancing our collaborative environment.</li>
-            <li>**[2025]**: Achieved [significant accomplishment, e.g., 98% client satisfaction rate].</li>
-            <li>**[2025]**: Introduced [new service, e.g., AI-powered analytics] to our offerings.</li>
+          <ul className="list-disc list-inside text-gray-800 text-lg space-y-4">
+            <li><strong>2023</strong>: Three friends officially launched IT Spire.</li>
+            <li><strong>2023</strong>: Successfully delivered our first client project.</li>
+            <li><strong>2023</strong>: Expanded services to include web, app, and UI/UX design.</li>
+            <li><strong>2023</strong>: Built a strong client base with high satisfaction.</li>
+            <li><strong>2023</strong>: Established our workspace in Noida Sec-62.</li>
           </ul>
-          <p className="text-lg text-gray-800 leading-relaxed mt-6">
-            Each milestone represents a step forward in our commitment to innovation and excellence. We’re proud of our growth, but more so, we're proud of the lasting impact we've made on our clients' success stories.
-          </p>
         </section>
 
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold text-blue-700 mb-6 border-b-2 border-blue-200 pb-2">
-            Our Core Values
+        {/* Founder Cards */}
+        <section className="mb-24">
+          <h2 className="text-3xl font-bold text-blue-700 mb-12 border-b-4 border-blue-200 pb-2 text-center">
+            Meet the Founders
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-yellow-50 p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-semibold text-yellow-800 mb-2">Innovation</h3>
-              <p className="text-gray-700 text-base">
-                We embrace new ideas and technologies to create forward-thinking solutions.
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            {/* Sachin */}
+            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-3xl shadow-xl p-6 transform hover:-translate-y-3 transition-all duration-500 hover:shadow-2xl text-center">
+              <div className="w-32 h-32 mx-auto rounded-full overflow-hidden shadow-lg mb-4">
+                <Image src="/sachin.png" alt="Sachin Kumar" width={128} height={128} className="object-cover w-full h-full" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-1">Sachin Kumar</h3>
+              <p className="text-sm text-blue-600 font-medium mb-2">Founder</p>
+              <p className="text-sm text-gray-700 leading-relaxed">
+                Managing operations at IT Spire while delivering reliable and scalable solutions using .NET technologies.
               </p>
             </div>
-            <div className="bg-purple-50 p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-semibold text-purple-800 mb-2">Integrity</h3>
-              <p className="text-gray-700 text-base">
-                We operate with honesty, transparency, and ethical conduct in all our dealings.
+
+            {/* Gaurav */}
+            <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-3xl shadow-xl p-6 transform hover:-translate-y-3 transition-all duration-500 hover:shadow-2xl text-center">
+              <div className="w-32 h-32 mx-auto rounded-full overflow-hidden shadow-lg mb-4">
+                <Image src="/gaurav-2.jpg" alt="Kumar Gaurav" width={128} height={128} className="object-cover w-full h-full" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-1">Kumar Gaurav</h3>
+              <p className="text-sm text-blue-600 font-medium mb-2">Director</p>
+              <p className="text-sm text-gray-700 leading-relaxed">
+                Leading IT Spire with a focus on modern React development and high-quality, scalable web solutions.
               </p>
             </div>
-            <div className="bg-indigo-50 p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-semibold text-indigo-800 mb-2">Client Focus</h3>
-              <p className="text-gray-700 text-base">
-                Our clients' success is our priority; we tailor solutions to their unique needs.
-              </p>
-            </div>
-            <div className="bg-pink-50 p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-semibold text-pink-800 mb-2">Excellence</h3>
-              <p className="text-gray-700 text-base">
-                We strive for the highest quality in every project, constantly improving.
-              </p>
-            </div>
-            <div className="bg-teal-50 p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-semibold text-teal-800 mb-2">Collaboration</h3>
-              <p className="text-gray-700 text-base">
-                We believe in the power of teamwork, both internally and with our clients.
+
+            {/* Dharmandra */}
+            <div className="bg-gradient-to-br from-teal-50 to-teal-100 rounded-3xl shadow-xl p-6 transform hover:-translate-y-3 transition-all duration-500 hover:shadow-2xl text-center">
+              <div className="w-32 h-32 mx-auto rounded-full overflow-hidden shadow-lg mb-4">
+                <Image src="/dharm.jpg" alt="Dharmandra Kumar" width={128} height={128} className="object-cover w-full h-full" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-1">Dharmandra Kumar</h3>
+              <p className="text-sm text-blue-600 font-medium mb-2">CEO</p>
+              <p className="text-sm text-gray-700 leading-relaxed">
+                Overseeing finances at IT Spire while optimizing digital presence and SEO strategies.
               </p>
             </div>
           </div>
         </section>
 
-        <section className="text-center">
-          <p className="text-lg text-gray-700 mb-6">
-            For a quick overview, head back to our{' '}
+        {/* Core Values */}
+        <section className="mb-20">
+          <h2 className="text-3xl font-bold text-blue-700 mb-6 border-b-4 border-blue-200 pb-2 text-center">
+            Our Core Values
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-2xl shadow-lg hover:scale-105 transform transition-all duration-300 text-center">
+              <h3 className="text-xl font-semibold text-blue-800 mb-3">Friendship & Trust</h3>
+              <p className="text-gray-700">Our foundation is built on mutual respect and trust.</p>
+            </div>
+            <div className="bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-2xl shadow-lg hover:scale-105 transform transition-all duration-300 text-center">
+              <h3 className="text-xl font-semibold text-green-800 mb-3">Quality First</h3>
+              <p className="text-gray-700">We never compromise on quality, design, or performance.</p>
+            </div>
+            <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-8 rounded-2xl shadow-lg hover:scale-105 transform transition-all duration-300 text-center">
+              <h3 className="text-xl font-semibold text-purple-800 mb-3">Client Success</h3>
+              <p className="text-gray-700">Your success is our success—every project matters.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Footer Link */}
+        <section className="text-center animate-fadeIn delay-800">
+          <p className="text-lg text-gray-700">
+            Want to know more? Visit our{" "}
             <Link href="/about/introduction" className="text-blue-600 hover:underline font-medium">
               Introduction page
             </Link>
@@ -99,6 +120,21 @@ export default function BrandStoryPage() {
           </p>
         </section>
       </div>
+
+      {/* Animations */}
+      <style jsx>{`
+        .animate-fadeIn {
+          opacity: 0;
+          animation: fadeIn 1s forwards;
+        }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-600 { animation-delay: 0.6s; }
+        .delay-800 { animation-delay: 0.8s; }
+        @keyframes fadeIn {
+          to { opacity: 1; }
+        }
+      `}</style>
     </div>
   );
 }
