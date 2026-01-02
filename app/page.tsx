@@ -29,7 +29,7 @@ export default function HomePage() {
     <div className="min-h-screen">
       <Header onConsultClick={handleOpenPopup} />
       <HeroBanner />
-      <StatsCounter />
+      {/* <StatsCounter /> */}
       <AboutSection />
       <WorkingProcess />
       <ServicesSection />
