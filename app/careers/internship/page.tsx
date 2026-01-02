@@ -11,46 +11,44 @@ export default function InternshipPage() {
   return (
     <div className="min-h-screen bg-gray-50 py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-8 md:p-10">
-        <h1 className="text-4xl font-extrabold text-gray-900 text-center mb-6">
+        <h1 className="text-5xl font-extrabold text-gray-900 text-center mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600 animate-fadeIn">
           Internship Opportunities
         </h1>
         <p className="text-lg text-gray-700 text-center mb-10 leading-relaxed">
-          At IT Spire, we believe in nurturing fresh talent and providing a platform for aspiring professionals to gain practical experience. Our internship programs are designed to give you hands-on exposure to real-world projects and cutting-edge technologies.
-        </p>
+          At IT Spire, we help students and fresh graduates turn their knowledge into real skills. Our internship programs focus on practical learning, real projects, and industry exposure to prepare you for a successful career.        </p>
 
         <section className="mb-12">
           <h2 className="text-3xl font-bold text-blue-700 mb-6 border-b-2 border-blue-200 pb-2">
-            Why Intern at IT Spire?
+            Why Choose an Internship at IT Spire?
           </h2>
           <ul className="space-y-4 text-gray-800 text-lg">
             <li className="flex items-start gap-3">
               <Briefcase className="w-6 h-6 text-blue-500 mt-1 flex-shrink-0" />
               <span>
-                **Real-world Projects:** Work on live projects that make a real impact.
+                <b>Hands-on Experience:</b> Work on real-time projects used by actual clients.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <MapPin className="w-6 h-6 text-blue-500 mt-1 flex-shrink-0" />
               <span>
-                **Mentorship:** Learn from experienced professionals who guide you every step of the way.
+                <b>Expert Guidance:</b> Get mentored by experienced developers and industry professionals.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Mail className="w-6 h-6 text-blue-500 mt-1 flex-shrink-0" />
               <span>
-                **Skill Development:** Enhance your technical and soft skills in a dynamic environment.
-              </span>
+                <b>Skill Enhancement:</b> Improve your technical abilities and professional communication skills.
+                </span>
             </li>
             <li className="flex items-start gap-3">
               <Briefcase className="w-6 h-6 text-blue-500 mt-1 flex-shrink-0" />
               <span>
-                **Networking:** Connect with industry experts and build valuable professional relationships.
-              </span>
+                <b>Industry Exposure: </b>Understand real company workflows and development standards. </span>
             </li>
             <li className="flex items-start gap-3">
               <MapPin className="w-6 h-6 text-blue-500 mt-1 flex-shrink-0" />
               <span>
-                **Career Growth:** Many of our interns transition into full-time roles.
+               <b>Career Opportunities:</b> Top-performing interns may receive full-time job offers
               </span>
             </li>
           </ul>
@@ -92,7 +90,7 @@ export default function InternshipPage() {
                 <li>Stipend: Performance-based</li>
               </ul>
               <button
-                 onClick={() => alert("Application for UI/UX Design Internships coming soon!")}
+                onClick={() => alert("Application for UI/UX Design Internships coming soon!")}
                 className="bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors"
               >
                 Apply Now (Coming Soon)
@@ -101,7 +99,7 @@ export default function InternshipPage() {
 
             {/* You can add more internship program cards here */}
             {/* Internship Program Card 3 */}
-             <div className="bg-purple-50 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+            <div className="bg-purple-50 p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
               <h3 className="text-xl font-semibold text-purple-800 mb-2">Mobile App Development Intern</h3>
               <p className="text-gray-700 text-base mb-4">
                 Dive into mobile development (React Native/Flutter) and build cross-platform applications.
@@ -112,7 +110,7 @@ export default function InternshipPage() {
                 <li>Stipend: Performance-based</li>
               </ul>
               <button
-                 onClick={() => alert("Application for Mobile App Development Internships coming soon!")}
+                onClick={() => alert("Application for Mobile App Development Internships coming soon!")}
                 className="bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition-colors"
               >
                 Apply Now (Coming Soon)
@@ -129,7 +127,7 @@ export default function InternshipPage() {
           <div className="flex justify-center items-center gap-4">
             <Mail className="w-7 h-7 text-blue-600" />
             <a
-              href="mailto:itspireonline@gmail.com" 
+              href="mailto:itspireonline@gmail.com"
               className="text-blue-600 hover:text-blue-800 text-lg font-medium transition-colors"
             >
               itspireonline@gmail.com

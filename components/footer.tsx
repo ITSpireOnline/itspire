@@ -35,12 +35,11 @@ export default function Footer() {
             <div>
               <h4 className="text-lg font-semibold mb-5 text-slate-100">Services</h4>
               <ul className="space-y-3 text-sm text-slate-400">
-                <li><Link href="/services/design" className="hover:text-white transition-colors">Design</Link></li>
-                <li><Link href="/services/development" className="hover:text-white transition-colors">Development</Link></li>
-                <li><Link href="/services/digital-marketing" className="hover:text-white transition-colors">Digital Marketing</Link></li>
-                <li><Link href="/services/devops" className="hover:text-white transition-colors">DevOps</Link></li>
-                <li><Link href="/services/content-writing" className="hover:text-white transition-colors">Content Writing</Link></li>
-                <li><Link href="/services/server-support" className="hover:text-white transition-colors">Server Support</Link></li>
+                <li><Link href="#" className="hover:text-white transition-colors">Design</Link></li>
+                <li><Link href="#" className="hover:text-white transition-colors">Development</Link></li>
+                <li><Link href="#" className="hover:text-white transition-colors">Digital Marketing</Link></li>
+                <li><Link href="#" className="hover:text-white transition-colors">DevOps</Link></li>
+                <li><Link href="#" className="hover:text-white transition-colors">Server Support</Link></li>
               </ul>
             </div>
 
@@ -48,12 +47,12 @@ export default function Footer() {
             <div>
               <h4 className="text-lg font-semibold mb-5 text-slate-100">Industries</h4>
               <ul className="space-y-3 text-sm text-slate-400">
-                <li><Link href="/industries/healthcare" className="hover:text-white transition-colors">Healthcare</Link></li>
-                <li><Link href="/industries/ecommerce" className="hover:text-white transition-colors">eCommerce</Link></li>
-                <li><Link href="/industries/education" className="hover:text-white transition-colors">Education</Link></li>
-                <li><Link href="/industries/wellness" className="hover:text-white transition-colors">Wellness</Link></li>
-                <li><Link href="/industries/travel" className="hover:text-white transition-colors">Tour & Travel</Link></li>
-                <li><Link href="/industries" className="text-blue-400 hover:text-white transition-colors">View All...</Link></li>
+                <li><Link href="#" className="hover:text-white transition-colors">Healthcare</Link></li>
+                <li><Link href="#" className="hover:text-white transition-colors">eCommerce</Link></li>
+                <li><Link href="#" className="hover:text-white transition-colors">Education</Link></li>
+                <li><Link href="#" className="hover:text-white transition-colors">Wellness</Link></li>
+                <li><Link href="#" className="hover:text-white transition-colors">Tour & Travel</Link></li>
+                {/* <li><Link href="/industries" className="text-blue-400 hover:text-white transition-colors">View All...</Link></li> */}
               </ul>
             </div>
 
@@ -61,11 +60,11 @@ export default function Footer() {
             <div>
               <h4 className="text-lg font-semibold mb-5 text-slate-100">Quick Links</h4>
               <ul className="space-y-3 text-sm text-slate-400">
-                <li><Link href="/about" className="hover:text-white transition-colors">About Us</Link></li> {/* Consolidated from introduction/brand-story */}
-                <li><Link href="/portfolio" className="hover:text-white transition-colors">Portfolio</Link></li>
-                <li><Link href="/careers" className="hover:text-white transition-colors">Career</Link></li>
-                <li><Link href="/blog" className="hover:text-white transition-colors">Blog</Link></li>
-                <li><Link href="/contact-us" className="hover:text-white transition-colors">Contact Us</Link></li>
+                <li><Link href="#" className="hover:text-white transition-colors">About Us</Link></li> {/* Consolidated from introduction/brand-story */}
+                <li><Link href="#" className="hover:text-white transition-colors">Portfolio</Link></li>
+                <li><Link href="#" className="hover:text-white transition-colors">Career</Link></li>
+                <li><Link href="#" className="hover:text-white transition-colors">Blog</Link></li>
+                <li><Link href="#" className="hover:text-white transition-colors">Contact Us</Link></li>
               </ul>
             </div>
           </div>

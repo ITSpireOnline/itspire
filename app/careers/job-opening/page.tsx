@@ -13,7 +13,8 @@ export default function JobOpeningPage() {
   return (
     <div className="min-h-screen bg-gray-50 py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-8 md:p-10">
-        <h1 className="text-4xl font-extrabold text-gray-900 text-center mb-6">
+
+        <h1 className="text-5xl font-extrabold text-gray-900 text-center mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600 animate-fadeIn">
           Current Job Openings
         </h1>
         <p className="text-lg text-gray-700 text-center mb-10 leading-relaxed">
